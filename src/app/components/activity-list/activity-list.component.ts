@@ -1,8 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ActivityStore } from '../../store/activity.store';
 import { CommonModule } from '@angular/common';
 import { NgIconsModule } from '@ng-icons/core';
-
 
 @Component({
   selector: 'app-activity-list',
@@ -17,6 +16,10 @@ export class ActivityListComponent {
 
   public store = inject(ActivityStore);
 
+  ngOnInit(): void {
+    this.store.loadActivities();
+
+  }
 
   getCategoryName(categoryId:number): string{
 

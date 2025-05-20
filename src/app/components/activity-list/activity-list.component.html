@@ -24,12 +24,12 @@
 
     <div class="flex gap-5 items-center">
         <button class="flex items-center justify-center h-8 w-8 text-gray-500"
-        (click)="store.setActiveId(activity.id)">
+        (click)="store.setActiveId(activity.id!)">
           <ng-icon name="heroPencilSquare" size="32"></ng-icon>
         </button>
 
         <button class="flex items-center justify-center h-8 w-8 text-red-500"
-        (click)="store.deleteActivity(activity.id)">
+        (click)="store.deleteActivity(activity.id!)">
           <ng-icon name="heroXCircle" size="32"></ng-icon>
         </button>
     </div>

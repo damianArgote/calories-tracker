@@ -5,7 +5,7 @@ export type Category = {
 
 
 export type Activity = {
-    id:string,
+    id?:string,
     category:number;
     name:string;
     calories:number;

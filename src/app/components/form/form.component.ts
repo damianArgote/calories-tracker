@@ -4,50 +4,72 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivityStore } from '../../store/activity.store';
 import { Activity } from '../../types';
+import { ActivityService } from '../../services/activity.service';
 @Component({
   selector: 'app-form',
-  imports: [CommonModule,ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './form.component.html',
   styleUrl: './form.component.css'
 })
 export class FormComponent {
   private fb = inject(FormBuilder);
   private store = inject(ActivityStore);
-
   public categoriOptions = categories;
-  public activity = signal<Activity | undefined>(undefined)
+  public activities = signal<Activity[]>([]);
+  public form: FormGroup = this.fb.group({
+    category: [1, [Validators.required]],
+    name: ['', [Validators.required]],
+    calories: [null, [Validators.required, Validators.min(1)]]
+  });
 
-  public form!: FormGroup;
+  constructor() {
 
-  constructor(){
-
-    effect(() =>{
-      if(this.store.activeId()){
-        const activity = this.store.activities().find(act => act.id === this.store.activeId());
-        this.activity.set(activity)
-      }else{
-        this.activity.set(undefined)
+    effect(() => {
+      if (this.store.activeId()) {
+        const act = this.store.activities().find(a => a.id === this.store.activeId());
+        if (act) {
+          this.form.setValue({
+            category: act.category,
+            name: act.name,
+            calories: act.calories
+          });
+        }
+      } else {
+        this.form.reset({
+          category: 1,
+          name: '',
+          calories: null
+        });
       }
-
-      this.form = this.fb.group({
-        category:[this.activity()?.category ?? '1', [Validators.required]],
-        name:[this.activity()?.name ?? '',[Validators.required]],
-        calories:[Number(this.activity()?.calories) ?? 0,[Validators.required, Validators.min(1)]]
-      })
-    })
+    });
   }
 
-  handleSubmit(){
-    if(this.form.invalid) return;
-      this.store.saveActivity({
+  handleSubmit() {
+    if (this.form.invalid) return;
+
+    if (this.store.activeId()) {
+      const id = this.store.activeId();
+      const updatedActivity: Partial<Activity> = {
         ...this.form.value,
         category: Number(this.form.value.category)
-      });
-      this.form.reset({
-        category:1,
-        name:'',
-        calories:null
-      });
+      };
+
+      this.store.updateActivity([id, updatedActivity]);
+
+    } else {
+
+      const newActivity: Activity = {
+        ...this.form.value,
+        category: Number(this.form.value.category)
+      };
+
+      this.store.saveActivity(newActivity);
+    }
+    this.form.reset({
+      category: 1,
+      name: '',
+      calories: null
+    });
   }
 
 }
