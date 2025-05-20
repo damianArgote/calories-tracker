@@ -1,0 +1,46 @@
+<form [formGroup]="form" (ngSubmit)="handleSubmit()" class="space-y-5 bg-white shadow p-10 rounded-lg">
+
+  <div class="grid grid-cols-1 gap-3">
+    <label htmlFor="category" class="font-bold">Categorias:</label>
+    <select
+    id="category"
+    class="border border-slate-300 p-2 rounded-lg w-full bg-white"
+    formControlName="category"
+    >
+      @for (category of categoriOptions; track category.id) {
+
+      <option [value]="category.id">
+        {{category.name}}
+      </option>
+      }
+
+    </select>
+  </div>
+
+  <div class="grid grid-cols-1 gap-3">
+    <label htmlFor="name" class="font-bold">Actividad:</label>
+    <input
+    id="name"
+    type="text"
+    class="border boder-slate-300 rounded-lg p-2"
+    placeholder="Ejemplo comida, jugo de naranja, ensalada, ejercicio, peso"
+    formControlName="name"/>
+  </div>
+
+  <div class="grid grid-cols-1 gap-3">
+    <label htmlFor="calories" class="font-bold">Actividad:</label>
+    <input
+    id="calories"
+    type="number"
+    class="border boder-slate-300 rounded-lg p-2"
+    placeholder="Calorias, ejemplo 300 o 500"
+    formControlName="calories"/>
+  </div>
+
+  <input
+  type="submit"
+  class="bg-gray-800 hover:bg-gray-900 uppercase w-full p-2 font-bold text-white disabled:opacity-10"
+  [value]="form.get('category')?.value === '1' ? 'Guardar Comida' : 'Guardar Ejercicio'"
+  [disabled]="form.invalid"/>
+
+</form>
