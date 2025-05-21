@@ -1,4 +1,5 @@
 export const environment = {
+  production: false,
   firebaseConfig: {
     apiKey: "AIzaSyDowsYr_Xmj3ivDYB5xvsmVljSEHjjIm58",
     authDomain: "calories-tracker-9dee7.firebaseapp.com",
