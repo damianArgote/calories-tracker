@@ -1,11 +1,11 @@
 export const environment = {
   production: false,
   firebaseConfig: {
-    apiKey: "AIzaSyDowsYr_Xmj3ivDYB5xvsmVljSEHjjIm58",
-    authDomain: "calories-tracker-9dee7.firebaseapp.com",
-    projectId: "calories-tracker-9dee7",
-    storageBucket: "calories-tracker-9dee7.firebasestorage.app",
-    messagingSenderId: "573165815192",
-    appId: "1:573165815192:web:e556acd76af1a9aef8d7ed"
+    apiKey: import.meta.env.NG_APP_FIREBASE_API_KEY,
+    authDomain: import.meta.env.NG_APP_FIREBASE_AUTH_DOMAIN,
+    projectId: import.meta.env.NG_APP_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.NG_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.NG_APP_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.NG_APP_FIREBASE_APP_ID
   }
 };
